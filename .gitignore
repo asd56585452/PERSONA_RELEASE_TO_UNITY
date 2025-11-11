@@ -27,3 +27,4 @@ third_modules/sam2
 third_modules/sapiens
 third_modules/segment-anything
 third_modules/SMPLest-X
+*.onnx

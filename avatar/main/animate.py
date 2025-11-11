@@ -45,6 +45,7 @@ def main():
     else:        
         motion_name = motion_path.split('/')[-1]
     frame_idx_list = sorted([int(x.split('/')[-1][:-5]) for x in glob(osp.join(args.motion_path, 'smplx', 'params', '*.json'))])
+    frame_idx_list = frame_idx_list[:10]
     render_shape = cv2.imread(osp.join(args.motion_path, 'images', str(frame_idx_list[0]) + '.png')).shape[:2]
    
     # load reference image

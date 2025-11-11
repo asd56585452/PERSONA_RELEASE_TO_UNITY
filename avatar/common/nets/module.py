@@ -194,7 +194,7 @@ class PERSONA(nn.Module):
         
         # 3. combine 1. 大 pose -> zero pose and 2. zero pose -> image pose
         transform_mat_joint = torch.bmm(transform_mat_joint_2, transform_mat_joint_1)
-        return transform_mat_joint
+        return transform_mat_joint, transform_mat_joint_1
     
     def get_skinning_weight(self, mean_3d, scale):
         # offsets to consider isotropic Gaussian scales (+-2 sigma)
@@ -310,7 +310,7 @@ class PERSONA(nn.Module):
         skinning_weight_refined = self.get_skinning_weight(mean_3d_refined, scale.detach())
 
         # forward kinematics and lbs
-        transform_mat_joint = self.get_transform_mat_joint(joint_zero_pose, smplx_param, jaw_zero_pose=True) # follow jaw_pose of the vert_neutral_pose
+        transform_mat_joint,_ = self.get_transform_mat_joint(joint_zero_pose, smplx_param, jaw_zero_pose=True) # follow jaw_pose of the vert_neutral_pose
         transform_mat_vertex = torch.matmul(skinning_weight, transform_mat_joint.view(smpl_x.joint['num'],16)).view(smpl_x.vertex_num_upsampled,4,4)
         vert = self.lbs(vert, transform_mat_vertex) # posed with smplx_param
         mean_3d = self.lbs(mean_3d, transform_mat_vertex) # posed with smplx_param

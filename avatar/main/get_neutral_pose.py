@@ -34,7 +34,7 @@ def main():
     # set dummy data, which will be replaced with data from checkpoint
     root_path = osp.join('..', 'data', 'subjects', cfg.subject_id)
     smpl_x.set_id_info(None, None, None)
-    smpl_x.set_texture(None, None)
+    smpl_x.set_texture(None, None, None)
     tester._make_model()
     model = tester.model.module
 
