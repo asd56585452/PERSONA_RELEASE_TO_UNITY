@@ -107,7 +107,7 @@ class ModelWrapper(torch.nn.Module):
                         'rotation', 
                         'rgb',
                         'mean_3d_refined',
-                        'skinning_weight_refined',
+                        # 'skinning_weight_refined',
                         'joint_zero_pose',
                         'transform_mat_neutral_pose',
                         'parents',
@@ -120,7 +120,7 @@ class ModelWrapper(torch.nn.Module):
         elif mode=="refine":
             self.output_names = [
                     'mean_3d_refined',
-                    'skinning_weight_refined'
+                    # 'skinning_weight_refined'
                 ]
         elif mode=="static":
             self.output_names = [
@@ -201,7 +201,7 @@ class ModelWrapper(torch.nn.Module):
                 self.rotation, 
                 self.rgb,
                 mean_3d_refined,
-                skinning_weight_refined,
+                # skinning_weight_refined,
                 self.joint_zero_pose,
                 self.transform_mat_neutral_pose,
                 # self.nn_vertex_idxs,
@@ -215,7 +215,7 @@ class ModelWrapper(torch.nn.Module):
         elif self.mode == "refine":
             return (
                 mean_3d_refined,
-                skinning_weight_refined
+                # skinning_weight_refined
             )
         elif self.mode == "static":
             return (
@@ -337,7 +337,7 @@ def main():
     )
     
     print(f"開始將模型轉換為 ONNX 格式，並儲存至 {args.output_path}...")
-    sub_model_names=["no_refine","static"]
+    sub_model_names=["refine","no_refine","static"]
     for sub_model_name in sub_model_names:
         wrapped_model = ModelWrapper(tester.model,smplx_param.keys(),cam_param.keys(),smplx_param, cam_param,sub_model_name).cuda().eval()
         output_names = wrapped_model.output_names 
